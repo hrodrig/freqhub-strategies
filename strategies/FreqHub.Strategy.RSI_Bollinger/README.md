@@ -32,7 +32,9 @@
 
 # FreqHub RSI_Bollinger Strategy
 
-This folder contains the **RSI + Bollinger Bands** strategy for Freqtrade.
+Independent repository to deploy the **RSI_BollingerStrategy** in Freqtrade,
+combining **RSI** momentum with **Bollinger Bands** volatility for entries and
+exits.
 
 FreqHub reference: https://github.com/hrodrig/freqhub
 
@@ -40,18 +42,89 @@ FreqHub reference: https://github.com/hrodrig/freqhub
 
 | Feature | Value |
 |----------------|-------|
-| **Risk Level** | 🟡 Low-Medium |
+| **Risk Level** | 🟡 Medium |
 | **Stop Loss** | -6% |
-| **Target ROI** | 10% |
-| **Timeframe** | 15m |
-| **Max Open Trades** | 5 |
+| **Trailing Stop** | Enabled (1.5% activation / 2.5% offset) |
+| **Target ROI** | 10% (initial), then 5% @ 30m, 3% @ 60m, 1% @ 120m |
+| **Timeframe** | 15m (with 1h informative context) |
+| **Max Open Trades** | 5 (from `config.json.example`) |
+| **Stake per Trade** | Unlimited (from `config.json.example`) |
+| **Mode** | Dry Run by default (configurable) |
 | **Recommended Pairs** | BTC/USDT, ETH/USDT, BNB/USDT, SOL/USDT |
-| **Best For** | Range-bound markets |
+| **Best For** | Ranging markets and controlled pullbacks |
 
 ## 📈 About the Strategy
 
-The strategy uses RSI to detect overbought/oversold conditions and Bollinger
-Bands to confirm potential reversals or pullbacks.
+This strategy seeks mean‑reversion entries near the **lower Bollinger Band** in
+the direction of a broader uptrend, with **RSI** filtering and **volume**
+confirmation. It uses a **15m** timeframe for signals and a **1h** informative
+timeframe to validate the trend.
+
+### 🎯 Special Features
+
+#### Informative Timeframe Confirmation
+The strategy uses a 1h timeframe to confirm direction:
+- 15m price must be above the 15m EMA
+- 15m price must also be above the 1h EMA
+- 1h RSI must be above 50
+
+#### Enhanced Startup Message
+On startup it sends a Telegram/Mattermost message (if configured) with:
+- Exchange and stake information
+- ROI table and stoploss settings
+- Timeframe and strategy name
+- Startup candle count
+
+## 🧠 Strategy Logic
+
+### Indicators Used
+
+- **RSI (14)** for momentum
+- **Bollinger Bands** with configurable period and standard deviation
+- **EMA (21)** for trend direction
+- **Volume SMA (20)** for volume confirmation
+- **1h RSI/EMA** for higher‑timeframe validation
+
+### Entry Conditions (Long)
+The strategy opens a position when all conditions are met:
+
+1. ✅ **RSI in favorable range**:
+   - `rsi > buy_rsi_min` and `rsi < buy_rsi_max`
+2. ✅ **Price near lower Bollinger Band**:
+   - `bb_percent < buy_bb_percent`
+3. ✅ **Uptrend on 15m**:
+   - `close > ema`
+4. ✅ **Uptrend on 1h**:
+   - `close > ema_1h` and `rsi_1h > 50`
+5. ✅ **Volume confirmation**:
+   - `volume > volume_sma * buy_volume_factor`
+
+### Exit Conditions
+The strategy closes a position when any of these happen:
+
+- ❌ **Price touches upper Bollinger Band** (`bb_percent > 0.95`)
+- ❌ **RSI overbought** (`rsi > 75`)
+- ❌ **EMA trend loss on 15m** (cross below EMA)
+- ❌ **Trend weakness on 1h** (`close < ema_1h` or `rsi_1h < 40`)
+
+### Optimizable Parameters
+
+**Buy:**
+- `buy_rsi_min`: 45–60 (default: 50)
+- `buy_rsi_max`: 65–80 (default: 70)
+- `buy_bb_period`: 15–25 (default: 20)
+- `buy_bb_std`: 1.5–2.5 (default: 2.0)
+- `buy_bb_percent`: 0.0–0.3 (default: 0.15)
+- `buy_volume_factor`: 1.0–2.5 (default: 1.5)
+
+**Sell/Exit:**
+- Exit logic is rule‑based (not hyper‑optimized).
+
+### Risk and Performance Notes
+
+- Best in **sideways** markets or **controlled pullbacks** within uptrends.
+- May underperform in strong trends or high volatility whipsaws.
+- RSI extremes can persist; avoid aggressive thresholds in trending markets.
 
 ## 📦 Contents
 
@@ -105,30 +178,43 @@ Notes:
   (e.g. 8011, 8012, 8013) and avoid port collisions.
 - To change ports, edit the `ports:` section in `docker-compose.yml`.
 
-## 🧠 Strategy Logic
+## 📝 Configuration
 
-This strategy combines **RSI** with **Bollinger Bands** to identify potential
-mean-reversion opportunities:
+### Modify Trading Pairs
 
-- **RSI** helps detect overbought/oversold conditions to time entries and exits.
-- **Bollinger Bands** provide a volatility envelope; touches or breaks can
-  signal potential reversals or pullbacks.
+Edit `config.json` and update the `pair_whitelist` section:
 
-### Why these indicators
+```yaml
+"pair_whitelist": [
+  "BTC/USDT",
+  "ETH/USDT",
+  # ... more pairs
+]
+```
 
-- RSI gives a fast momentum signal that often precedes short-term reversals.
-- Bollinger Bands adapt to volatility, filtering noisy RSI signals in ranging
-  markets.
+### Adjust Strategy Parameters
 
-### Pros
+Optimize parameters using Freqtrade:
 
-- Works well in **range-bound** or choppy markets.
-- Simple and interpretable signals.
+```bash
+# Optimize buy parameters
+freqtrade hyperopt --strategy RSI_BollingerStrategy --hyperopt-loss SharpeHyperOptLoss --spaces buy -e 100
+```
 
-### Cons
+## 🔧 Troubleshooting
 
-- Can underperform in strong trending markets (RSI can stay extreme).
-- Requires careful tuning of thresholds and period lengths per market.
+### The strategy does not open trades
+
+1. Verify `dry_run` is configured correctly
+2. Check the logs for generated signals
+3. Adjust entry parameters if they are too restrictive
+4. Confirm volume is sufficient for the chosen pairs
+
+## 📚 References
+
+- [Freqtrade Documentation](https://www.freqtrade.io/)
+- [RSI - Wikipedia](https://en.wikipedia.org/wiki/Relative_strength_index)
+- [Bollinger Bands - Wikipedia](https://en.wikipedia.org/wiki/Bollinger_Bands)
 
 ## 📝 License
 

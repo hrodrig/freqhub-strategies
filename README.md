@@ -32,7 +32,7 @@
 
 # FreqHub Strategies
 
-[![Version](https://img.shields.io/badge/version-0.2.4-blue)](VERSION)
+[![Version](https://img.shields.io/badge/version-0.2.5-blue)](VERSION)
 [![License](https://img.shields.io/badge/license-GPL--3.0-green)](LICENSE)
 [![FreqHub](https://img.shields.io/badge/FreqHub-Repo-blue)](https://github.com/hrodrig/freqhub)
 
@@ -48,6 +48,7 @@ way to run them.
 
 - `TemplateStrategy`: minimal example strategy.
 - `RSI_Bollinger`: RSI + Bollinger example.
+- `IchiV1`: Ichimoku Cloud strategy.
 
 ## Requirements
 

@@ -12,24 +12,24 @@ logger = logging.getLogger(__name__)
 
 class RSI_BollingerStrategy(IStrategy):
     """
-    Estrategia Simple RSI + Bollinger Bands - Momentum y volatilidad
-    
-    Nivel de Riesgo: MEDIO
-    Profit Esperado: ~8-10% mensual
-    
-    Esta estrategia combina RSI para identificar momentum con Bollinger Bands
-    para identificar zonas de entrada en condiciones de volatilidad.
-    
-    Características:
-    - Stop loss moderado (-6%)
-    - Trailing stop para proteger ganancias
-    - Timeframe: 15m con contexto de 1h
-    - Entrada cuando RSI favorable y precio rebota desde banda inferior
+    Simple RSI + Bollinger Bands Strategy - Momentum and volatility
+
+    Risk Level: MEDIUM
+    Expected Profit: ~8-10% monthly
+
+    This strategy combines RSI to identify momentum with Bollinger Bands
+    to locate entry zones in volatile conditions.
+
+    Features:
+    - Moderate stop loss (-6%)
+    - Trailing stop to protect profits
+    - Timeframe: 15m with 1h context
+    - Entry when RSI is favorable and price bounces off the lower band
     """
     
     INTERFACE_VERSION = 3
     
-    # Parámetros optimizables
+    # Optimizable parameters
     buy_rsi_min = IntParameter(45, 60, default=50, space="buy", optimize=True)
     buy_rsi_max = IntParameter(65, 80, default=70, space="buy", optimize=True)
     buy_bb_period = IntParameter(15, 25, default=20, space="buy", optimize=True)
@@ -37,12 +37,12 @@ class RSI_BollingerStrategy(IStrategy):
     buy_bb_percent = DecimalParameter(0.0, 0.3, default=0.15, space="buy", optimize=True)
     buy_volume_factor = DecimalParameter(1.0, 2.5, default=1.5, space="buy", optimize=True)
     
-    # Parámetros fijos
+    # Fixed parameters
     timeframe = '15m'
-    stoploss = -0.06  # Stop loss del 6%
+    stoploss = -0.06  # 6% stop loss
     trailing_stop = True
-    trailing_stop_positive = 0.015  # Activar trailing stop después de 1.5% de ganancia
-    trailing_stop_positive_offset = 0.025  # Mantener al menos 2.5% de ganancia
+    trailing_stop_positive = 0.015  # Activate trailing stop after 1.5% profit
+    trailing_stop_positive_offset = 0.025  # Keep at least 2.5% profit
     trailing_only_offset_is_reached = True
     use_exit_signal = True
     exit_profit_only = False
@@ -50,10 +50,10 @@ class RSI_BollingerStrategy(IStrategy):
     
     # ROI table
     minimal_roi = {
-        "0": 0.10,   # 10% después de 0 minutos
-        "30": 0.05,  # 5% después de 30 minutos
-        "60": 0.03,  # 3% después de 60 minutos
-        "120": 0.01  # 1% después de 120 minutos
+        "0": 0.10,   # 10% after 0 minutes
+        "30": 0.05,  # 5% after 30 minutes
+        "60": 0.03,  # 3% after 60 minutes
+        "120": 0.01  # 1% after 120 minutes
     }
     
     # Informative pairs
@@ -81,15 +81,15 @@ class RSI_BollingerStrategy(IStrategy):
 *Strategy:* `RSI_BollingerStrategy`
 *Startup candles:* `{self.startup_candle_count}`
 
-Bot iniciado correctamente y listo para operar."""
+Bot started successfully and ready to trade."""
             
             if hasattr(self.dp, 'send_msg'):
                 self.dp.send_msg(startup_msg)
         except Exception as e:
-            logger.warning(f"No se pudo enviar mensaje de startup: {e}")
+            logger.warning(f"Could not send startup message: {e}")
     
     def populate_indicators(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
-        # RSI para momentum
+        # RSI for momentum
         dataframe['rsi'] = ta.RSI(dataframe, timeperiod=14)
         
         # Bollinger Bands
@@ -103,13 +103,13 @@ Bot iniciado correctamente y listo para operar."""
             dataframe['bb_upperband'] - dataframe['bb_lowerband']
         )
         
-        # EMA para tendencia
+        # EMA for trend
         dataframe['ema'] = ta.EMA(dataframe, timeperiod=21)
         
-        # Volumen promedio
+        # Average volume
         dataframe['volume_sma'] = dataframe['volume'].rolling(window=20).mean()
         
-        # Informative timeframe (1h) para contexto
+        # Informative timeframe (1h) for context
         informative = self.dp.get_pair_dataframe(pair=metadata['pair'], timeframe=self.informative_timeframe)
         informative['rsi'] = ta.RSI(informative, timeperiod=14)
         informative['ema'] = ta.EMA(informative, timeperiod=21)
@@ -121,17 +121,17 @@ Bot iniciado correctamente y listo para operar."""
     def populate_entry_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         dataframe.loc[
             (
-                # RSI en rango favorable
+                # RSI in favorable range
                 (dataframe['rsi'] > self.buy_rsi_min.value) &
                 (dataframe['rsi'] < self.buy_rsi_max.value) &
-                # Precio cerca de banda inferior (rebote esperado)
+                # Price near lower band (expected bounce)
                 (dataframe['bb_percent'] < self.buy_bb_percent.value) &
-                # Precio por encima de EMA (tendencia alcista)
+                # Price above EMA (bullish trend)
                 (dataframe['close'] > dataframe['ema']) &
-                # Tendencia alcista en timeframe superior
+                # Bullish trend in higher timeframe
                 (dataframe['close'] > dataframe[f'ema_{self.informative_timeframe}']) &
                 (dataframe[f'rsi_{self.informative_timeframe}'] > 50) &
-                # Confirmación de volumen
+                # Volume confirmation
                 (dataframe['volume'] > dataframe['volume_sma'] * self.buy_volume_factor.value) &
                 (dataframe['volume'] > 0)
             ),
@@ -142,14 +142,14 @@ Bot iniciado correctamente y listo para operar."""
     def populate_exit_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         dataframe.loc[
             (
-                # Precio toca banda superior (sobrecompra)
+                # Price touches upper band (overbought)
                 (dataframe['bb_percent'] > 0.95) |
-                # RSI sobrecomprado
+                # RSI overbought
                 (dataframe['rsi'] > 75) |
-                # Precio cruza por debajo de EMA
+                # Price crosses below EMA
                 (dataframe['close'] < dataframe['ema']) &
                 (dataframe['close'].shift(1) >= dataframe['ema'].shift(1)) |
-                # Cambio de tendencia en timeframe superior
+                # Trend change in higher timeframe
                 (dataframe['close'] < dataframe[f'ema_{self.informative_timeframe}']) |
                 (dataframe[f'rsi_{self.informative_timeframe}'] < 40)
             ),
