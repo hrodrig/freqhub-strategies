@@ -1,0 +1,104 @@
+# Freqhub .gitignore
+# This file uses a whitelist approach: exclude everything, then explicitly include what we need
+
+# ============================================
+# EXCLUDE EVERYTHING BY DEFAULT
+# ============================================
+*
+.*
+# Note: * excludes all files, .* explicitly excludes hidden files/directories
+
+# ============================================
+# EXPLICITLY INCLUDE ESSENTIAL FILES
+# ============================================
+!Makefile
+
+# License file
+!LICENSE
+
+# Documentation
+!README.md
+!COPYRIGHT_HEADER.txt
+!COPYRIGHT_GUIDE.md
+!CODE_OF_CONDUCT.md
+!DONATIONS.md
+!CHANGELOG.md
+
+# Strategies files
+!strategies/
+!strategies/**/*
+!strategies/**/config.json.example
+strategies/**/config.json
+strategies/**/user_data/**
+!strategies/**/user_data/.keep
+
+# Scripts files
+!scripts/
+!scripts/**/*
+
+# ============================================
+# EDITOR & IDE
+# ============================================
+
+# Editor directories and files (exclude)
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# ============================================
+# TEMPORARY FILES
+# ============================================
+
+# Temporary files (exclude)
+*.tmp
+*.temp
+.cache/
+.parcel-cache/
+
+# ============================================
+# DOCKER
+# ============================================
+
+# Docker files (include)
+!Dockerfile
+!docker-compose.yml
+!docker-compose.full.yml
+!docker-compose.published.yml
+!.dockerignore
+!docker/
+!docker/**/*
+
+# ============================================
+# CI/CD
+# ============================================
+
+# CI/CD configuration (include)
+!.github/
+!.github/**/*
+!.gitlab-ci.yml
+!.travis.yml
+!.circleci/
+
+# ============================================
+# GIT
+# ============================================
+
+# Git files (include)
+!.gitignore
+!.gitattributes
+!.git/
+
+# ============================================
+# ADDITIONAL CONFIGURATION
+# ============================================
+
+# ============================================
+# NOTE: As you add new files/directories to the project,
+# add them to the whitelist above using the ! prefix
+# ============================================
+
