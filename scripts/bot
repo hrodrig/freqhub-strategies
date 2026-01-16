@@ -1,0 +1,184 @@
+#!/usr/bin/env bash
+#
+# FreqHub Strategies - Curated Strategies for Freqtrade to be used with FreqHub
+# Copyright (C) 2025 - 2026  FreqHub Strategies Contributors
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+# ⚖️ DISCLAIMER
+# USE AT YOUR OWN RISK
+#
+# This software is provided "as is", without warranty of any kind, express or implied,
+# including but not limited to the warranties of merchantability, fitness for a particular
+# purpose and noninfringement. In no event shall the authors or copyright holders be liable
+# for any claim, damages or other liability, whether in an action of contract, tort or
+# otherwise, arising from, out of or in connection with the software or the use or other
+# dealings in the software.
+#
+# Trading cryptocurrencies involves substantial risk of loss and is not suitable for every
+# investor. The value of cryptocurrencies may fluctuate, and you may lose some or all of
+# your investment. Past performance is not indicative of future results.
+
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: bot up|down [strategy_dir]
+
+If [strategy_dir] is not provided, the current directory is used.
+
+Environment variables (up):
+  IMAGE          Docker image to run (default: freqhub-strategy-<dir>:latest)
+  STRATEGY       Strategy class name (default: read from config.json)
+  STRATEGY_DIR   Strategy folder name (default: basename of strategy_dir)
+  API_PORT       Host port for Freqtrade API (default: 8080)
+  BOT_SUFFIX     Optional suffix for container name
+  CONTAINER_NAME Optional override for container name
+  DATA_DIR       Host data dir (default: <strategy_dir>/data)
+  REMOVE_ORPHANS Set to true to clean orphaned containers (compose only)
+  COMPOSE_IGNORE_ORPHANS Set to 1 to ignore orphan warnings (default)
+
+Environment variables (down):
+  STRATEGY_DIR   Strategy folder name (default: basename of strategy_dir)
+  BOT_SUFFIX     Optional suffix for container name
+  CONTAINER_NAME Optional override for container name
+  REMOVE_ORPHANS Set to true to clean orphaned containers (compose only)
+  COMPOSE_IGNORE_ORPHANS Set to 1 to ignore orphan warnings (default)
+EOF
+}
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  usage
+  exit 0
+fi
+
+ACTION="${1:-}"
+shift || true
+
+BOT_DIR="${1:-$(pwd)}"
+BOT_DIR="$(cd "${BOT_DIR}" && pwd)"
+
+COMPOSE_FILE="${BOT_DIR}/docker-compose.yml"
+CONFIG_FILE="${BOT_DIR}/config.json"
+CONFIG_EXAMPLE="${BOT_DIR}/config.json.example"
+
+error_missing_config() {
+  echo "────────────────────────────────────────" >&2
+  if [[ -f "${CONFIG_EXAMPLE}" ]]; then
+    echo "❌ ERROR: config.json not found in ${BOT_DIR}" >&2
+    echo "👉 Run:" >&2
+    echo "   cp \"${CONFIG_EXAMPLE}\" \"${CONFIG_FILE}\"" >&2
+    echo "   # edit the file and try again" >&2
+  else
+    echo "❌ ERROR: config.json not found in ${BOT_DIR}" >&2
+  fi
+  echo "────────────────────────────────────────" >&2
+}
+
+ensure_config() {
+  if [[ ! -f "${CONFIG_FILE}" ]]; then
+    error_missing_config
+    exit 1
+  fi
+}
+
+compose_up() {
+  ensure_config
+  REMOVE_ORPHANS_FLAG=""
+  if [[ "${REMOVE_ORPHANS:-false}" == "true" ]]; then
+    REMOVE_ORPHANS_FLAG="--remove-orphans"
+  fi
+  COMPOSE_IGNORE_ORPHANS="${COMPOSE_IGNORE_ORPHANS:-1}" \
+  docker compose -f "${COMPOSE_FILE}" up -d --build ${REMOVE_ORPHANS_FLAG}
+}
+
+compose_down() {
+  REMOVE_ORPHANS_FLAG=""
+  if [[ "${REMOVE_ORPHANS:-false}" == "true" ]]; then
+    REMOVE_ORPHANS_FLAG="--remove-orphans"
+  fi
+  COMPOSE_IGNORE_ORPHANS="${COMPOSE_IGNORE_ORPHANS:-1}" \
+  docker compose -f "${COMPOSE_FILE}" down ${REMOVE_ORPHANS_FLAG}
+}
+
+docker_run_up() {
+  ensure_config
+
+  STRATEGY_DIR="${STRATEGY_DIR:-$(basename "${BOT_DIR}")}"
+  DEFAULT_IMAGE="freqhub-strategy-${STRATEGY_DIR,,}:latest"
+  IMAGE="${IMAGE:-${DEFAULT_IMAGE}}"
+  API_PORT="${API_PORT:-8080}"
+  DATA_DIR="${DATA_DIR:-${BOT_DIR}/data}"
+
+  if [[ -z "${STRATEGY:-}" ]]; then
+    STRATEGY="$(grep -E '"strategy"\s*:' "${CONFIG_FILE}" | sed -E 's/.*"strategy"\s*:\s*"([^"]+)".*/\1/' | head -n 1)"
+  fi
+
+  if [[ -z "${STRATEGY:-}" ]]; then
+    echo "ERROR: STRATEGY is required (set env or define in config.json)." >&2
+    exit 1
+  fi
+
+  BOT_SUFFIX="${BOT_SUFFIX:-}"
+  DEFAULT_NAME="freqtrade-${STRATEGY_DIR}${BOT_SUFFIX:+-${BOT_SUFFIX}}"
+  CONTAINER_NAME="${CONTAINER_NAME:-${DEFAULT_NAME}}"
+
+  mkdir -p "${DATA_DIR}"
+
+  DOCKERFILE="${BOT_DIR}/Dockerfile"
+  if [[ -f "${DOCKERFILE}" ]]; then
+    docker build -t "${IMAGE}" "${BOT_DIR}"
+  fi
+
+  docker run -d \
+    --name "${CONTAINER_NAME}" \
+    -p "${API_PORT}:8080" \
+    -e STRATEGY="${STRATEGY}" \
+    -e STRATEGY_DIR="${STRATEGY_DIR}" \
+    -e CONFIG_PATH="/freqtrade/user_data/config.json" \
+    -v "${CONFIG_FILE}:/freqtrade/user_data/config.json:ro" \
+    -v "${BOT_DIR}:/freqtrade/user_data/strategies/${STRATEGY_DIR}:ro" \
+    -v "${DATA_DIR}:/freqtrade/user_data/data" \
+    "${IMAGE}"
+}
+
+docker_run_down() {
+  STRATEGY_DIR="${STRATEGY_DIR:-$(basename "${BOT_DIR}")}"
+  BOT_SUFFIX="${BOT_SUFFIX:-}"
+  DEFAULT_NAME="freqtrade-${STRATEGY_DIR}${BOT_SUFFIX:+-${BOT_SUFFIX}}"
+  CONTAINER_NAME="${CONTAINER_NAME:-${DEFAULT_NAME}}"
+  docker rm -f "${CONTAINER_NAME}"
+}
+
+case "${ACTION}" in
+  up)
+    if [[ -f "${COMPOSE_FILE}" ]]; then
+      compose_up
+    else
+      docker_run_up
+    fi
+    ;;
+  down)
+    if [[ -f "${COMPOSE_FILE}" ]]; then
+      compose_down
+    else
+      docker_run_down
+    fi
+    ;;
+  *)
+    echo "ERROR: missing or invalid action. Use 'up' or 'down'." >&2
+    usage >&2
+    exit 1
+    ;;
+esac

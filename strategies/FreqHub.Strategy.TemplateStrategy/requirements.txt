@@ -1,0 +1,2 @@
+# Example extra dependency for this strategy
+ta-lib
