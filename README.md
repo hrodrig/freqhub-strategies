@@ -32,7 +32,7 @@
 
 # FreqHub Strategies
 
-[![Version](https://img.shields.io/badge/version-0.2.5-blue)](VERSION)
+[![Version](https://img.shields.io/badge/version-0.2.8-blue)](VERSION)
 [![License](https://img.shields.io/badge/license-GPL--3.0-green)](LICENSE)
 [![FreqHub](https://img.shields.io/badge/FreqHub-Repo-blue)](https://github.com/hrodrig/freqhub)
 
@@ -49,6 +49,10 @@ way to run them.
 - `TemplateStrategy`: minimal example strategy.
 - `RSI_Bollinger`: RSI + Bollinger example.
 - `IchiV1`: Ichimoku Cloud strategy.
+- `Markov`: discrete Markov state transitions.
+- `MarkovFastEMA`: Markov with fast EMA confirmation.
+- `MarkovVolume`: Markov with volume confirmation.
+- `MarkovRSI`: Markov with optimizable RSI thresholds.
 
 ## Requirements
 
