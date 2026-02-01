@@ -44,7 +44,7 @@ services:
     container_name: freqtrade-markov-volume
     restart: unless-stopped
     ports:
-      - "8014:8080"
+      - "8016:8080"
     volumes:
       - ./config.json:/freqtrade/user_data/config.json:ro
       - ./user_data/data:/freqtrade/user_data/data

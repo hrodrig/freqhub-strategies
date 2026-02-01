@@ -218,6 +218,8 @@ class MarkovVolumeStrategy(IStrategy):
 
     @property
     def minimal_roi(self):
+        if hasattr(self, "_minimal_roi_override") and self._minimal_roi_override is not None:
+            return self._minimal_roi_override
         return {
             "0": float(self.roi_p1.value),
             str(int(self.roi_t1.value)): float(self.roi_p2.value),
@@ -225,6 +227,16 @@ class MarkovVolumeStrategy(IStrategy):
             str(int(self.roi_t3.value)): float(self.roi_p4.value),
         }
 
+    @minimal_roi.setter
+    def minimal_roi(self, value):
+        self._minimal_roi_override = value
+
     @property
     def stoploss(self):
+        if hasattr(self, "_stoploss_override") and self._stoploss_override is not None:
+            return self._stoploss_override
         return float(self.stoploss_opt.value)
+
+    @stoploss.setter
+    def stoploss(self, value):
+        self._stoploss_override = value
