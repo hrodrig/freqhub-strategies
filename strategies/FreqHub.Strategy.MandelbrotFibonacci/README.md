@@ -51,7 +51,7 @@ FreqHub reference: https://github.com/hrodrig/freqhub
 | **Max Open Trades** | 2 (from `config.json.example`) |
 | **Recommended Pairs** | BTC/USDT, ETH/USDT, SOL/USDT |
 | **Best For** | Trend pullbacks into fib zones |
-| **Sides** | Long + Short (Futures) |
+| **Sides** | Long (default), Short (futures optional) |
 
 ## About the Strategy
 
@@ -120,7 +120,11 @@ cp config.json.example config.json
 ```
 
 For shorting, ensure your exchange and Freqtrade setup supports futures/shorts.
-Spot-only setups will ignore `enter_short` signals.
+Spot-only setups require `can_short = False` (default).
+
+To enable shorts, set:
+- `can_short = True` in `MandelbrotFibonacci.py`
+- `trading_mode = "futures"` in `config.json`
 
 ## Adapting to Forex
 

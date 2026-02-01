@@ -34,7 +34,7 @@ class MandelbrotFibonacciStrategy(IStrategy):
     exit_profit_only = False
     ignore_roi_if_entry_signal = False
     startup_candle_count = 210
-    can_short = True
+    can_short = False
 
     minimal_roi = {
         "0": 0.06,
