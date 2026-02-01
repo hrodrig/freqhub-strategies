@@ -103,7 +103,7 @@ freqtrade hyperopt \
 
 Notes:
 
-- The API is exposed on `http://localhost:8014`.
+- The API is exposed on `http://localhost:8016`.
 
 ## 📚 References
 
