@@ -48,6 +48,7 @@ This glossary covers the most common terms used across strategies and configs.
 - **BB Percent**: Position within Bollinger Bands (0 = lower band, 1 = upper band).
 - **BB Period**: Lookback period used for Bollinger Band calculation.
 - **BB Standard Deviation**: Standard deviation multiplier for Bollinger Bands.
+- **BB Delta**: Absolute distance between the middle and lower Bollinger Bands.
 - **BB Lower/Middle/Upper Band**: Individual Bollinger Band lines.
 - **Break Even**: Price level where a trade has no profit or loss after fees.
 - **Breakout Impulse**: Strong price move that breaks through a key level.
@@ -59,6 +60,8 @@ This glossary covers the most common terms used across strategies and configs.
 
 - **Chikou Span**: Ichimoku lagging line (current close shifted backward).
 - **Candle Body**: Portion of a candle between open and close prices.
+- **Candle Tail (Lower Tail/Wick)**: Distance between close and low of a candle.
+- **Close Delta**: Absolute change between the current close and previous close.
 - **Crossover**: When one indicator line crosses another (e.g., EMA crossover).
 - **CORS**: Cross-Origin Resource Sharing, browser rules for API access.
 - **Custom Stoploss**: Dynamic stoploss function that adjusts based on profit levels.

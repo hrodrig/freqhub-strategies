@@ -32,7 +32,7 @@
 
 # FreqHub Strategies
 
-[![Version](https://img.shields.io/badge/version-0.2.13-blue)](VERSION)
+[![Version](https://img.shields.io/badge/version-0.2.14-blue)](VERSION)
 [![License](https://img.shields.io/badge/license-GPL--3.0-green)](LICENSE)
 [![FreqHub](https://img.shields.io/badge/FreqHub-Repo-blue)](https://github.com/hrodrig/freqhub)
 
@@ -56,6 +56,7 @@ how these strategies map to it.
 
 ## Included strategies
 
+- `BinHV45`: Mean reversion strategy with Bollinger Bands.
 - `FailureToReturn`: Failure to Return (FTR) breakout continuation strategy.
 - `IchiV1`: Ichimoku Cloud strategy.
 - `MandelbrotFibonacci`: Fractals + Fibonacci pullback strategy.
@@ -101,6 +102,18 @@ Stop it:
 
 ```
 ./scripts/bot down strategies/FreqHub.Strategy.TemplateStrategy
+```
+
+Run all strategies with a `config.json` present:
+
+```
+./scripts/bots up
+```
+
+Stop all strategies:
+
+```
+./scripts/bots down
 ```
 
 ### Option B: Docker Compose (manual,advanced)
