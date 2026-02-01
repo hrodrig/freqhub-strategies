@@ -109,7 +109,7 @@ docker compose -f strategies/FreqHub.Strategy.IchiV1/docker-compose.yml down
 
 Notes:
 
-- The API is exposed on `http://localhost:8012` (see `docker-compose.yml`).
+- The API is exposed on `http://localhost:8017` (see `docker-compose.yml`).
 - Use port `8010` for the template. For additional strategies, use `8011+`
   (e.g. 8011, 8012, 8013) and avoid port collisions.
 - To change ports, edit the `ports:` section in `docker-compose.yml`.
