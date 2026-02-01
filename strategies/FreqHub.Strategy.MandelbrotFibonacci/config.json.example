@@ -1,0 +1,59 @@
+{
+  "dry_run": true,
+  "dry_run_wallet": 1000,
+  "stake_currency": "USDT",
+  "stake_amount": "unlimited",
+  "fiat_display_currency": "USD",
+  "timeframe": "1h",
+  "strategy": "MandelbrotFibonacciStrategy",
+  "strategy_path": "/freqtrade/user_data/strategies/FreqHub.Strategy.MandelbrotFibonacci",
+  "exchange": {
+    "name": "binance",
+    "key": "",
+    "secret": "",
+    "ccxt_config": {},
+    "ccxt_async_config": {},
+    "pair_whitelist": [
+      "BTC/USDT",
+      "ETH/USDT",
+      "SOL/USDT"
+    ],
+    "pair_blacklist": []
+  },
+  "pairlists": [
+    {
+      "method": "StaticPairList"
+    }
+  ],
+  "entry_pricing": {
+    "price_side": "same",
+    "check_depth_of_market": {
+      "enabled": false,
+      "bids_to_ask_delta": 1
+    },
+    "use_orderbook": true,
+    "orderbook_top": 1,
+    "price_last_balance": 0.0,
+    "price_last_balance_count": 0
+  },
+  "exit_pricing": {
+    "price_side": "same",
+    "price_last_balance": 0.0
+  },
+  "api_server": {
+    "enabled": true,
+    "listen_ip_address": "0.0.0.0",
+    "listen_port": 8080,
+    "verbosity": "error",
+    "enable_openapi": true,
+    "jwt_secret_key": "change-me",
+    "CORS_origins": [],
+    "username": "freqhub",
+    "password": "change-me"
+  },
+  "bot_name": "MandelbrotFibonacciStrategy",
+  "datadir": "/freqtrade/user_data/data",
+  "initial_state": "running",
+  "forcebuy_enable": false,
+  "max_open_trades": 2
+}
