@@ -74,9 +74,12 @@
         "listen_port": 8080,
         "verbosity": "error",
         "enable_openapi": true,
-        "jwt_secret_key": "change-me",
-        "CORS_origins": [],
-        "username": "freqhub",
-        "password": "change-me"
+        "jwt_secret_key": "change-this-jwt-secret-key-in-production",
+        "CORS_origins": [
+            "http://localhost:3000",
+            "http://localhost:3001"
+        ],
+        "username": "freqtrader",
+        "password": "SuperSecret"
     }
 }
