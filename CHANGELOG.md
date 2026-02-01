@@ -39,6 +39,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.10] - 2026-02-01
+### Added
+- FailureToReturn strategy package with Dockerfile, compose, and documentation
+- Long/short FTR signals with session filtering and daily profit guard
+- Forex-focused example config using OANDA
+
 ## [0.2.5] - 2026-01-15
 ### Added
 - IchiV1 strategy package with Dockerfile, compose, and documentation
