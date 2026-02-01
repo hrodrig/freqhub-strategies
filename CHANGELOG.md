@@ -39,6 +39,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.11] - 2026-02-01
+### Added
+- MandelbrotFibonacci strategy package with Dockerfile, compose, and documentation
+- Crypto-focused defaults with guidance to adapt for forex
+
 ## [0.2.10] - 2026-02-01
 ### Added
 - FailureToReturn strategy package with Dockerfile, compose, and documentation
