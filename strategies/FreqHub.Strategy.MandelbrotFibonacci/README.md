@@ -106,7 +106,7 @@ Positions are closed when the trend weakens:
 
 ## Contents
 
-- `FreqHub.Strategy.MandelbrotFibonacci.py`: strategy code
+- `MandelbrotFibonacciStrategy.py`: strategy code
 - `config.json.example`: example Freqtrade config for this strategy
 - `config.header.txt`: GPL header to keep alongside the config
 - `requirements.txt`: optional extra dependencies installed during image build
@@ -130,8 +130,9 @@ To enable shorts, set:
 
 To use this strategy on forex, adjust the following:
 
-- **Exchange**: set the exchange (e.g. `oanda`, `fxcm`, `forexcom`) in
-  `config.json`.
+- **Exchange**: pick a **CCXT-supported** exchange that offers your FX pairs.
+  Some brokers (like OANDA) are not available in CCXT, so they will fail in
+  Freqtrade.
 - **Pairs**: replace crypto pairs with FX pairs like `EUR/USD`, `GBP/USD`,
   `USD/JPY`.
 - **Timeframe**: consider `4h` or `1h` depending on session liquidity.

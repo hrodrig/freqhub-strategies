@@ -7,7 +7,16 @@ import talib.abstract as ta
 from pandas import DataFrame
 
 from freqtrade.persistence import Trade
-from freqtrade.strategy import BoolParameter, DecimalParameter, IntParameter, IStrategy
+from freqtrade.strategy import DecimalParameter, IntParameter, IStrategy
+
+try:
+    from freqtrade.strategy import BoolParameter
+except ImportError:  # Backward compatibility for older Freqtrade versions
+    from freqtrade.strategy import CategoricalParameter
+
+    class BoolParameter(CategoricalParameter):
+        def __init__(self, default: bool = False, **kwargs):
+            super().__init__([True, False], default=default, **kwargs)
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +62,7 @@ class FailureToReturnStrategy(IStrategy):
     exit_profit_only = False
     ignore_roi_if_entry_signal = False
     startup_candle_count = 200
-    can_short = True
+    can_short = False
 
     minimal_roi = {
         "0": 0.04,

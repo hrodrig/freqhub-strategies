@@ -36,4 +36,4 @@ WORKDIR /freqtrade
 COPY requirements.txt /tmp/requirements.txt
 RUN if [ -s /tmp/requirements.txt ]; then python -m pip install --no-cache-dir -r /tmp/requirements.txt; fi
 
-COPY MarkovVolume.py /freqtrade/user_data/strategies/FreqHub.Strategy.MarkovVolume/
+COPY MarkovVolumeStrategy.py /freqtrade/user_data/strategies/FreqHub.Strategy.MarkovVolume/

@@ -39,6 +39,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.15] - 2026-02-01
+### Added
+- EMACrossover, RSIEMA50, and MessageTest strategy packages
+
+### Changed
+- Docker compose files now rely on config.json (removed environment overrides)
+- Glossary expanded with EMA Crossover and MACD terms
+- README and strategies/README updated with new strategies and usage
+
+## [0.2.14] - 2026-02-01
+### Added
+- BinHV45 strategy package with Dockerfile, compose, and documentation
+- Bulk `scripts/bots` helper for starting/stopping all strategies
+
+### Changed
+- IchiV1 no longer sends startup messages via RPC
+- FailureToReturn now supports older Freqtrade without BoolParameter
+- Glossary expanded with Bollinger and candle terminology
+- README updated with BinHV45 and bulk script usage
+
+## [0.2.13] - 2026-02-01
+### Changed
+- Standardize strategy filenames for MarkovRSI, MarkovVolume, and TemplateStrategy
+- Update README naming guidance to match new strategy filename convention
+
 ## [0.2.12] - 2026-02-01
 ### Added
 - Glossary with common trading and config terms

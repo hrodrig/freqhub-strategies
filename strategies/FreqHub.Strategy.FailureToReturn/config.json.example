@@ -8,7 +8,7 @@
   "strategy": "FailureToReturnStrategy",
   "strategy_path": "/freqtrade/user_data/strategies/FreqHub.Strategy.FailureToReturn",
   "exchange": {
-    "name": "oanda",
+    "name": "kraken",
     "key": "",
     "secret": "",
     "ccxt_config": {

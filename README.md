@@ -32,7 +32,7 @@
 
 # FreqHub Strategies
 
-[![Version](https://img.shields.io/badge/version-0.2.12-blue)](VERSION)
+[![Version](https://img.shields.io/badge/version-0.2.15-blue)](VERSION)
 [![License](https://img.shields.io/badge/license-GPL--3.0-green)](LICENSE)
 [![FreqHub](https://img.shields.io/badge/FreqHub-Repo-blue)](https://github.com/hrodrig/freqhub)
 
@@ -56,15 +56,19 @@ how these strategies map to it.
 
 ## Included strategies
 
-- `TemplateStrategy`: minimal example strategy.
-- `RSI_Bollinger`: RSI + Bollinger example.
-- `IchiV1`: Ichimoku Cloud strategy.
+- `BinHV45`: Mean reversion strategy with Bollinger Bands.
+- `EMACrossover`: EMA crossover strategy with momentum confirmation.
 - `FailureToReturn`: Failure to Return (FTR) breakout continuation strategy.
+- `IchiV1`: Ichimoku Cloud strategy.
 - `MandelbrotFibonacci`: Fractals + Fibonacci pullback strategy.
 - `Markov`: discrete Markov state transitions.
 - `MarkovFastEMA`: Markov with fast EMA confirmation.
-- `MarkovVolume`: Markov with volume confirmation.
 - `MarkovRSI`: Markov with optimizable RSI thresholds.
+- `MarkovVolume`: Markov with volume confirmation.
+- `MessageTest`: Messaging test strategy (do not use for live trading).
+- `RSI_Bollinger`: RSI + Bollinger example.
+- `RSIEMA50`: RSI + EMA50 trend-following strategy.
+- `TemplateStrategy`: minimal example strategy.
 
 ## Requirements
 
@@ -101,6 +105,18 @@ Stop it:
 
 ```
 ./scripts/bot down strategies/FreqHub.Strategy.TemplateStrategy
+```
+
+Run all strategies with a `config.json` present:
+
+```
+./scripts/bots up
+```
+
+Stop all strategies:
+
+```
+./scripts/bots down
 ```
 
 ### Option B: Docker Compose (manual,advanced)
@@ -157,7 +173,7 @@ When you use `scripts/bot up`, these variables are supported:
 
 1) Create a folder: `strategies/FreqHub.Strategy.<StrategyName>/`
 2) Add the strategy file:
-   `FreqHub.Strategy.<StrategyName>.py` with a class inheriting `IStrategy`.
+   `<StrategyName>Strategy.py` with a class inheriting `IStrategy`.
 3) Optionally add a `config.json.example` and a `README.md` inside the strategy folder.
 4) Update `docker-compose.yml` to use it via `--strategy <StrategyName>`.
 

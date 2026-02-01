@@ -55,7 +55,7 @@ easy to extend.
 
 ## 📦 Contents
 
-- `FreqHub.Strategy.TemplateStrategy.py`: strategy code
+- `TemplateStrategy.py`: strategy code
 - `config.json.example`: example Freqtrade config for this strategy
 - `config.header.txt`: GPL header to keep alongside the config
 - `requirements.txt`: optional extra dependencies installed during image build

@@ -58,7 +58,7 @@ Exit includes state weakening, fast EMA < slow EMA, or RSI above `sell_rsi_overb
 
 ## 📦 Contents
 
-- `MarkovFastEMA.py`: strategy code
+- `MarkovFastEMAStrategy.py`: strategy code
 - `config.json.example`: example Freqtrade config for this strategy
 - `config.header.txt`: GPL header to keep alongside the config
 - `requirements.txt`: optional extra dependencies installed during image build

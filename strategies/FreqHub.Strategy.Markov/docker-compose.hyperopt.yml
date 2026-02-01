@@ -40,15 +40,6 @@ services:
       - ./config.json:/freqtrade/user_data/config.json:ro
       - ./user_data/data:/freqtrade/user_data/data
       - ./user_data/logs:/freqtrade/user_data/logs
-    environment:
-      - FREQTRADE__EXCHANGE__NAME=${FREQTRADE_EXCHANGE_NAME:-binance}
-      - FREQTRADE__EXCHANGE__KEY=${FREQTRADE_EXCHANGE_KEY_1:-}
-      - FREQTRADE__EXCHANGE__SECRET=${FREQTRADE_EXCHANGE_SECRET_1:-}
-      - FREQTRADE__DRY_RUN=${FREQTRADE_DRY_RUN:-true}
-      - FREQTRADE__DRY_RUN_WALLET=${FREQTRADE_DRY_RUN_WALLET:-1000}
-      - FREQTRADE__STRATEGY=MarkovStrategy
-      - FREQTRADE_HYPEROPT_EPOCHS=${FREQTRADE_HYPEROPT_EPOCHS:-200}
-      - FREQTRADE_HYPEROPT_TIMERANGE=${FREQTRADE_HYPEROPT_TIMERANGE:-20230101-}
     command: >
       hyperopt
       --logfile /freqtrade/user_data/logs/freqtrade-hyperopt.log
@@ -56,8 +47,8 @@ services:
       --strategy MarkovStrategy
       --hyperopt-loss SharpeHyperOptLoss
       --spaces buy sell
-      -e ${FREQTRADE_HYPEROPT_EPOCHS}
-      --timerange ${FREQTRADE_HYPEROPT_TIMERANGE}
+      -e 200
+      --timerange 20230101-
     networks:
       - freqtrade-network
 

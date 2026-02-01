@@ -188,7 +188,7 @@ if enter_short_signal and session_volume_ok:
 
 ## Contents
 
-- `FreqHub.Strategy.FailureToReturn.py`: strategy code
+- `FailureToReturnStrategy.py`: strategy code
 - `config.json.example`: example Freqtrade config for this strategy
 - `config.header.txt`: GPL header to keep alongside the config
 - `requirements.txt`: optional extra dependencies installed during image build
@@ -206,9 +206,12 @@ Spot-only setups will ignore `enter_short` signals.
 
 ## Exchange Notes
 
-The example config uses **OANDA** for Forex, but you can switch to any exchange
-supported by Freqtrade/CCXT. Common FX options include: `oanda`, `fxcm`,
-`forexcom`, and `dukascopy`.
+Freqtrade uses **CCXT** exchanges. Some popular FX brokers (like OANDA) are **not**
+available via CCXT, so they will fail with `Exchange "oanda" is not known...`.
+
+Use a **supported** exchange name and ensure the pairs exist on that venue.
+If you cannot trade FX pairs on your chosen exchange, replace the FX pairs
+with crypto pairs and adjust the strategy accordingly.
 
 For the full, up-to-date list of supported exchanges, see:
 https://www.freqtrade.io/en/stable/exchanges/

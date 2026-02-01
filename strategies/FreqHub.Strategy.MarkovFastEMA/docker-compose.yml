@@ -49,23 +49,6 @@ services:
       - ./config.json:/freqtrade/user_data/config.json:ro
       - ./user_data/data:/freqtrade/user_data/data
       - ./user_data/logs:/freqtrade/user_data/logs
-    environment:
-      # API Server Configuration
-      - FREQTRADE__API_SERVER__ENABLED=true
-      - FREQTRADE__API_SERVER__LISTEN_IP_ADDRESS=0.0.0.0
-      - FREQTRADE__API_SERVER__LISTEN_PORT=8080
-      - FREQTRADE__API_SERVER__USERNAME=${FREQTRADE_USERNAME:-freqtrader}
-      - FREQTRADE__API_SERVER__PASSWORD=${FREQTRADE_PASSWORD_1:-SuperSecretPass}
-      - FREQTRADE__API_SERVER__JWT_SECRET_KEY=${FREQTRADE_JWT_SECRET:-change-me}
-      - FREQTRADE__API_SERVER__CORS_ORIGINS=["http://localhost:3000","http://localhost:3001"]
-      # Exchange Configuration (Binance)
-      - FREQTRADE__EXCHANGE__NAME=${FREQTRADE_EXCHANGE_NAME:-binance}
-      - FREQTRADE__EXCHANGE__KEY=${FREQTRADE_EXCHANGE_KEY_1:-}
-      - FREQTRADE__EXCHANGE__SECRET=${FREQTRADE_EXCHANGE_SECRET_1:-}
-      # Trading Configuration
-      - FREQTRADE__DRY_RUN=${FREQTRADE_DRY_RUN:-true}
-      - FREQTRADE__DRY_RUN_WALLET=${FREQTRADE_DRY_RUN_WALLET:-1000}
-      - FREQTRADE__STRATEGY=MarkovFastEMAStrategy
     command: >
       trade
       --logfile /freqtrade/user_data/logs/freqtrade.log
