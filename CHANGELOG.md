@@ -39,6 +39,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.12] - 2026-02-01
+### Added
+- Glossary with common trading and config terms
+- Trading overview with a beginner-friendly workflow
+
+### Changed
+- README updated to link glossary and trading overview
+
 ## [0.2.11] - 2026-02-01
 ### Added
 - MandelbrotFibonacci strategy package with Dockerfile, compose, and documentation

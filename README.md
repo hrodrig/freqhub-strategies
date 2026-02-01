@@ -32,7 +32,7 @@
 
 # FreqHub Strategies
 
-[![Version](https://img.shields.io/badge/version-0.2.11-blue)](VERSION)
+[![Version](https://img.shields.io/badge/version-0.2.12-blue)](VERSION)
 [![License](https://img.shields.io/badge/license-GPL--3.0-green)](LICENSE)
 [![FreqHub](https://img.shields.io/badge/FreqHub-Repo-blue)](https://github.com/hrodrig/freqhub)
 
@@ -43,6 +43,16 @@ way to run them.
 ## Structure
 
 - `strategies/`: Freqtrade strategies (one folder per strategy).
+- `GLOSSARY.md`: Definitions of common trading and config terms.
+
+## Glossary
+
+See `GLOSSARY.md` for definitions of indicators, pattern names, and config fields.
+
+## Trading Overview
+
+See `TRADING_OVERVIEW.md` for a general, beginner-friendly trading workflow and
+how these strategies map to it.
 
 ## Included strategies
 
