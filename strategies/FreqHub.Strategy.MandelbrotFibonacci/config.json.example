@@ -1,24 +1,22 @@
 {
   "dry_run": true,
   "dry_run_wallet": 1000,
-  "stake_currency": "USD",
+  "stake_currency": "USDT",
   "stake_amount": "unlimited",
   "fiat_display_currency": "USD",
   "timeframe": "1h",
-  "strategy": "FailureToReturnStrategy",
-  "strategy_path": "/freqtrade/user_data/strategies/FreqHub.Strategy.FailureToReturn",
+  "strategy": "MandelbrotFibonacciStrategy",
+  "strategy_path": "/freqtrade/user_data/strategies/FreqHub.Strategy.MandelbrotFibonacci",
   "exchange": {
-    "name": "oanda",
+    "name": "binance",
     "key": "",
     "secret": "",
-    "ccxt_config": {
-      "enableRateLimit": true
-    },
+    "ccxt_config": {},
     "ccxt_async_config": {},
     "pair_whitelist": [
-      "EUR/USD",
-      "GBP/USD",
-      "USD/JPY"
+      "BTC/USDT",
+      "ETH/USDT",
+      "SOL/USDT"
     ],
     "pair_blacklist": []
   },
@@ -56,7 +54,7 @@
     "username": "freqtrader",
     "password": "SuperSecret"
   },
-  "bot_name": "FailureToReturnStrategy",
+  "bot_name": "MandelbrotFibonacciStrategy",
   "datadir": "/freqtrade/user_data/data",
   "initial_state": "running",
   "force_entry_enable": false,
