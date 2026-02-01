@@ -188,7 +188,7 @@ if enter_short_signal and session_volume_ok:
 
 ## Contents
 
-- `FreqHub.Strategy.FailureToReturn.py`: strategy code
+- `FailureToReturnStrategy.py`: strategy code
 - `config.json.example`: example Freqtrade config for this strategy
 - `config.header.txt`: GPL header to keep alongside the config
 - `requirements.txt`: optional extra dependencies installed during image build

@@ -106,7 +106,7 @@ Positions are closed when the trend weakens:
 
 ## Contents
 
-- `FreqHub.Strategy.MandelbrotFibonacci.py`: strategy code
+- `MandelbrotFibonacciStrategy.py`: strategy code
 - `config.json.example`: example Freqtrade config for this strategy
 - `config.header.txt`: GPL header to keep alongside the config
 - `requirements.txt`: optional extra dependencies installed during image build

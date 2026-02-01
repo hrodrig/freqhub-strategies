@@ -36,4 +36,4 @@ WORKDIR /freqtrade
 COPY requirements.txt /tmp/requirements.txt
 RUN if [ -s /tmp/requirements.txt ]; then python -m pip install --no-cache-dir -r /tmp/requirements.txt; fi
 
-COPY FreqHub.Strategy.MandelbrotFibonacci.py /freqtrade/user_data/strategies/FreqHub.Strategy.MandelbrotFibonacci/
+COPY MandelbrotFibonacciStrategy.py /freqtrade/user_data/strategies/FreqHub.Strategy.MandelbrotFibonacci/

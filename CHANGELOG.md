@@ -39,6 +39,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.13] - 2026-02-01
+### Changed
+- Standardize strategy filenames for MarkovRSI, MarkovVolume, and TemplateStrategy
+- Update README naming guidance to match new strategy filename convention
+
 ## [0.2.12] - 2026-02-01
 ### Added
 - Glossary with common trading and config terms

@@ -73,7 +73,7 @@ Note: keep `rsi_low < rsi_high` to avoid overlapping states.
 
 If you want a different timeframe, update **both**:
 
-- `timeframe` in `MarkovRSI.py`
+- `timeframe` in `MarkovRSIStrategy.py`
 - `timeframe` in `config.json`
 
 ## ⚙️ Setup
