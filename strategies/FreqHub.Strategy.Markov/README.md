@@ -149,7 +149,7 @@ Optimizable parameters:
 
 Copy the example config and edit it:
 
-```
+```bash
 cp config.json.example config.json
 ```
 
@@ -157,19 +157,19 @@ cp config.json.example config.json
 
 1) Ensure the shared network exists (usually created by FreqHub):
 
-```
+```bash
 ./scripts/net up
 ```
 
 2) Preferably use the helper script from repo root:
 
-```
+```bash
 ./scripts/bot up strategies/FreqHub.Strategy.Markov
 ```
 
 ## 🧪 Run Hyperopt (Docker)
 
-```
+```bash
 docker compose -f docker-compose.hyperopt.yml up --build --abort-on-container-exit
 ```
 
@@ -180,7 +180,7 @@ Defaults:
 
 ## 🧪 Run Hyperopt (Freqtrade CLI)
 
-```
+```bash
 freqtrade hyperopt \
   --strategy MarkovStrategy \
   --hyperopt-loss SharpeHyperOptLoss \
@@ -191,17 +191,17 @@ freqtrade hyperopt \
 
 3) Stop the bot (preferred):
 
-```
+```bash
 ./scripts/bot down strategies/FreqHub.Strategy.Markov
 ```
 
 Alternative (manual compose):
 
-```
+```bash
 docker compose -f strategies/FreqHub.Strategy.Markov/docker-compose.yml up -d --build
 ```
 
-```
+```bash
 docker compose -f strategies/FreqHub.Strategy.Markov/docker-compose.yml down
 ```
 

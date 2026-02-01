@@ -78,19 +78,19 @@ If you want a different timeframe, update **both**:
 
 ## ⚙️ Setup
 
-```
+```bash
 cp config.json.example config.json
 ```
 
 ## 🚀 Run the Bot
 
-```
+```bash
 ./scripts/bot up strategies/FreqHub.Strategy.MarkovRSI
 ```
 
 ## 🧪 Run Hyperopt (Docker)
 
-```
+```bash
 docker compose -f docker-compose.hyperopt.yml up --build --abort-on-container-exit
 ```
 
@@ -101,7 +101,7 @@ Defaults:
 
 ## 🧪 Run Hyperopt (Freqtrade CLI)
 
-```
+```bash
 freqtrade hyperopt \
   --strategy MarkovRSIStrategy \
   --hyperopt-loss SharpeHyperOptLoss \

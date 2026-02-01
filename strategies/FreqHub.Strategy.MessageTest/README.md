@@ -60,13 +60,13 @@ Do **not** use it for live trading.
 
 ## ⚙️ Setup
 
-```
+```bash
 cp config.json.example config.json
 ```
 
 ## 🚀 Run the Bot
 
-```
+```bash
 ./scripts/bot up strategies/FreqHub.Strategy.MessageTest
 ```
 

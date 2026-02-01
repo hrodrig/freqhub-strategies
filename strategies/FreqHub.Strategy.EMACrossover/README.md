@@ -84,13 +84,13 @@ Exit triggers when any of the following is true:
 
 ## ⚙️ Setup
 
-```
+```bash
 cp config.json.example config.json
 ```
 
 ## 🚀 Run the Bot
 
-```
+```bash
 ./scripts/bot up strategies/FreqHub.Strategy.EMACrossover
 ```
 

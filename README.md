@@ -97,25 +97,25 @@ each strategy folder.
 
 Start a bot using the strategy's `config.json` (after copying from the example):
 
-```
+```bash
 ./scripts/bot up strategies/FreqHub.Strategy.TemplateStrategy
 ```
 
 Stop it:
 
-```
+```bash
 ./scripts/bot down strategies/FreqHub.Strategy.TemplateStrategy
 ```
 
 Run all strategies with a `config.json` present:
 
-```
+```bash
 ./scripts/bots up
 ```
 
 Stop all strategies:
 
-```
+```bash
 ./scripts/bots down
 ```
 
@@ -123,13 +123,13 @@ Stop all strategies:
 
 From any directory:
 
-```
+```bash
 docker compose -f strategies/FreqHub.Strategy.TemplateStrategy/docker-compose.yml up -d
 ```
 
 Stop it with:
 
-```
+```bash
 docker compose -f strategies/FreqHub.Strategy.TemplateStrategy/docker-compose.yml down
 ```
 

@@ -69,19 +69,19 @@ Optimizable parameters:
 
 ## ⚙️ Setup
 
-```
+```bash
 cp config.json.example config.json
 ```
 
 ## 🚀 Run the Bot
 
-```
+```bash
 ./scripts/bot up strategies/FreqHub.Strategy.MarkovVolume
 ```
 
 ## 🧪 Run Hyperopt (Docker)
 
-```
+```bash
 docker compose -f docker-compose.hyperopt.yml up --build --abort-on-container-exit
 ```
 
@@ -92,7 +92,7 @@ Defaults:
 
 ## 🧪 Run Hyperopt (Freqtrade CLI)
 
-```
+```bash
 freqtrade hyperopt \
   --strategy MarkovVolumeStrategy \
   --hyperopt-loss SharpeHyperOptLoss \

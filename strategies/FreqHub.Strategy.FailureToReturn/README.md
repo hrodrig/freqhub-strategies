@@ -150,7 +150,7 @@ in Forex during liquid sessions and clear trends.
 
 Example pseudocode:
 
-```
+```python
 daily_trend_up = close_1d > ema_1d
 daily_trend_down = close_1d < ema_1d
 
@@ -163,7 +163,7 @@ if enter_short_signal and daily_trend_down:
 
 Alternative (prior day close bias):
 
-```
+```python
 daily_bias_up = close_1d > close_1d.shift(1)
 daily_bias_down = close_1d < close_1d.shift(1)
 
@@ -176,7 +176,7 @@ if enter_short_signal and daily_bias_down:
 
 Alternative (session volume confirmation):
 
-```
+```python
 session_volume_ok = session_volume > session_volume_sma
 
 if enter_long_signal and session_volume_ok:
@@ -197,7 +197,7 @@ if enter_short_signal and session_volume_ok:
 
 Copy the example config and edit it:
 
-```
+```bash
 cp config.json.example config.json
 ```
 
@@ -233,29 +233,29 @@ live/dry-run. It is not suitable for backtesting/hyperopt.
 
 1) Ensure the shared network exists (usually created by FreqHub):
 
-```
+```bash
 ./scripts/net up
 ```
 
-2) Preferably use the helper script from repo root:
+1) Preferably use the helper script from repo root:
 
-```
+```bash
 ./scripts/bot up strategies/FreqHub.Strategy.FailureToReturn
 ```
 
-3) Stop the bot (preferred):
+1) Stop the bot (preferred):
 
-```
+```bash
 ./scripts/bot down strategies/FreqHub.Strategy.FailureToReturn
 ```
 
 Alternative (manual compose):
 
-```
+```bash
 docker compose -f strategies/FreqHub.Strategy.FailureToReturn/docker-compose.yml up -d --build
 ```
 
-```
+```bash
 docker compose -f strategies/FreqHub.Strategy.FailureToReturn/docker-compose.yml down
 ```
 

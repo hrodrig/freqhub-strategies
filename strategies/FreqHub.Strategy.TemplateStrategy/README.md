@@ -64,7 +64,7 @@ easy to extend.
 
 Copy the example config and edit it:
 
-```
+```bash
 cp config.json.example config.json
 ```
 
@@ -72,29 +72,29 @@ cp config.json.example config.json
 
 1) Ensure the shared network exists (usually created by FreqHub):
 
-```
+```bash
 ./scripts/net up
 ```
 
 2) Preferably use the helper script from repo root:
 
-```
+```bash
 ./scripts/bot up strategies/FreqHub.Strategy.TemplateStrategy
 ```
 
 3) Stop the bot (preferred):
 
-```
+```bash
 ./scripts/bot down strategies/FreqHub.Strategy.TemplateStrategy
 ```
 
 Alternative (manual compose):
 
-```
+```bash
 docker compose -f strategies/FreqHub.Strategy.TemplateStrategy/docker-compose.yml up -d --build
 ```
 
-```
+```bash
 docker compose -f strategies/FreqHub.Strategy.TemplateStrategy/docker-compose.yml down
 ```
 
