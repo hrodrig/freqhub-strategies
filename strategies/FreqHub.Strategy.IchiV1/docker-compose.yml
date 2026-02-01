@@ -44,7 +44,7 @@ services:
     container_name: freqtrade-ichiv1
     restart: unless-stopped
     ports:
-      - "8012:8080"
+      - "8017:8080"
     volumes:
       - ./config.json:/freqtrade/user_data/config.json:ro
       - ./user_data/data:/freqtrade/user_data/data
