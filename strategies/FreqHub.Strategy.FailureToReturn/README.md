@@ -206,9 +206,12 @@ Spot-only setups will ignore `enter_short` signals.
 
 ## Exchange Notes
 
-The example config uses **OANDA** for Forex, but you can switch to any exchange
-supported by Freqtrade/CCXT. Common FX options include: `oanda`, `fxcm`,
-`forexcom`, and `dukascopy`.
+Freqtrade uses **CCXT** exchanges. Some popular FX brokers (like OANDA) are **not**
+available via CCXT, so they will fail with `Exchange "oanda" is not known...`.
+
+Use a **supported** exchange name and ensure the pairs exist on that venue.
+If you cannot trade FX pairs on your chosen exchange, replace the FX pairs
+with crypto pairs and adjust the strategy accordingly.
 
 For the full, up-to-date list of supported exchanges, see:
 https://www.freqtrade.io/en/stable/exchanges/
