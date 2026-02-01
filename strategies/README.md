@@ -42,21 +42,21 @@ FreqHub reference: https://github.com/hrodrig/freqhub
 
 Use the helper scripts from the repo root:
 
-```
+```bash
 ./scripts/bot up strategies/FreqHub.Strategy.TemplateStrategy
 ./scripts/bot down strategies/FreqHub.Strategy.TemplateStrategy
 ```
 
 Bulk helpers:
 
-```
+```bash
 ./scripts/bots up
 ./scripts/bots down
 ```
 
 First time (or if the `config.json` is missing), copy the example config:
 
-```
+```bash
 cp strategies/FreqHub.Strategy.TemplateStrategy/config.json.example \
   strategies/FreqHub.Strategy.TemplateStrategy/config.json
 ```

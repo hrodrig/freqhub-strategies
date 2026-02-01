@@ -73,7 +73,7 @@ FreqHub reference: https://github.com/hrodrig/freqhub
 
 Copy the example config and edit it:
 
-```
+```bash
 cp config.json.example config.json
 ```
 
@@ -81,29 +81,29 @@ cp config.json.example config.json
 
 1) Ensure the shared network exists (usually created by FreqHub):
 
-```
+```bash
 ./scripts/net up
 ```
 
 2) Preferably use the helper script from repo root:
 
-```
+```bash
 ./scripts/bot up strategies/FreqHub.Strategy.IchiV1
 ```
 
 3) Stop the bot (preferred):
 
-```
+```bash
 ./scripts/bot down strategies/FreqHub.Strategy.IchiV1
 ```
 
 Alternative (manual compose):
 
-```
+```bash
 docker compose -f strategies/FreqHub.Strategy.IchiV1/docker-compose.yml up -d --build
 ```
 
-```
+```bash
 docker compose -f strategies/FreqHub.Strategy.IchiV1/docker-compose.yml down
 ```
 
