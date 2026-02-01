@@ -78,6 +78,7 @@ This glossary covers the most common terms used across strategies and configs.
 ## E
 
 - **EMA (Exponential Moving Average)**: Moving average with more weight on recent prices.
+- **EMA Crossover**: Signal where a shorter EMA crosses above/below a longer EMA.
 - **Entry/Exit Signal**: Strategy rule that opens or closes a trade.
 
 ## F
@@ -116,6 +117,8 @@ This glossary covers the most common terms used across strategies and configs.
 
 ## M
 
+- **MACD (Moving Average Convergence Divergence)**: Momentum indicator based on EMA spreads.
+- **MACD Signal Line**: EMA of MACD used for cross/confirmation.
 - **Mean Reversion**: Expectation that price returns to an average after extremes.
 - **Markov Chain**: Model where next state depends only on current state.
 - **Markov State**: Discrete market state assigned by EMA/RSI conditions.

@@ -27,30 +27,42 @@
 # Trading cryptocurrencies involves substantial risk of loss and is not suitable for every
 # investor. The value of cryptocurrencies may fluctuate, and you may lose some or all of
 # your investment. Past performance is not indicative of future results.
+#
+# Docker Compose example for running multiple Freqtrade instances
+# This file is for local development or when you want to run FreqHub locally
+# and connect to Freqtrade bots running in Docker containers
+#
+# Usage:
+#   see README.md for usage
 
 name: freqhub-stack
 
 services:
-  freqtrade-markov-volume-hyperopt:
+  freqtrade-messagetest:
     build: .
-    image: freqhub-strategy-markov-volume:latest
-    container_name: freqtrade-markov-volume-hyperopt
-    restart: "no"
+    image: freqhub-strategy-messagetest:latest
+    container_name: freqtrade-messagetest
+    restart: unless-stopped
+    ports:
+      - "8022:8080"
     volumes:
       - ./config.json:/freqtrade/user_data/config.json:ro
       - ./user_data/data:/freqtrade/user_data/data
       - ./user_data/logs:/freqtrade/user_data/logs
     command: >
-      hyperopt
-      --logfile /freqtrade/user_data/logs/freqtrade-hyperopt.log
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade.log
+      --db-url sqlite:////freqtrade/user_data/data/tradesv3.sqlite
       --config /freqtrade/user_data/config.json
-      --strategy MarkovVolumeStrategy
-      --hyperopt-loss SharpeHyperOptLoss
-      --spaces buy sell
-      -e 200
-      --timerange 20230101-
+      --strategy MessageTestStrategy
     networks:
       - freqtrade-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8080/api/v1/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
 networks:
   freqtrade-network:

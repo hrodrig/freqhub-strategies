@@ -39,6 +39,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.15] - 2026-02-01
+### Added
+- EMACrossover, RSIEMA50, and MessageTest strategy packages
+
+### Changed
+- Docker compose files now rely on config.json (removed environment overrides)
+- Glossary expanded with EMA Crossover and MACD terms
+- README and strategies/README updated with new strategies and usage
+
 ## [0.2.14] - 2026-02-01
 ### Added
 - BinHV45 strategy package with Dockerfile, compose, and documentation

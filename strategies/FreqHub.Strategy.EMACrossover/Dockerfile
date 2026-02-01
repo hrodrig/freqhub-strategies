@@ -27,31 +27,13 @@
 # Trading cryptocurrencies involves substantial risk of loss and is not suitable for every
 # investor. The value of cryptocurrencies may fluctuate, and you may lose some or all of
 # your investment. Past performance is not indicative of future results.
+#
 
-name: freqhub-stack
+FROM freqtradeorg/freqtrade:stable
 
-services:
-  freqtrade-markov-volume-hyperopt:
-    build: .
-    image: freqhub-strategy-markov-volume:latest
-    container_name: freqtrade-markov-volume-hyperopt
-    restart: "no"
-    volumes:
-      - ./config.json:/freqtrade/user_data/config.json:ro
-      - ./user_data/data:/freqtrade/user_data/data
-      - ./user_data/logs:/freqtrade/user_data/logs
-    command: >
-      hyperopt
-      --logfile /freqtrade/user_data/logs/freqtrade-hyperopt.log
-      --config /freqtrade/user_data/config.json
-      --strategy MarkovVolumeStrategy
-      --hyperopt-loss SharpeHyperOptLoss
-      --spaces buy sell
-      -e 200
-      --timerange 20230101-
-    networks:
-      - freqtrade-network
+WORKDIR /freqtrade
 
-networks:
-  freqtrade-network:
-    external: true
+COPY requirements.txt /tmp/requirements.txt
+RUN if [ -s /tmp/requirements.txt ]; then python -m pip install --no-cache-dir -r /tmp/requirements.txt; fi
+
+COPY EMACrossoverStrategy.py /freqtrade/user_data/strategies/FreqHub.Strategy.EMACrossover/

@@ -47,6 +47,13 @@ Use the helper scripts from the repo root:
 ./scripts/bot down strategies/FreqHub.Strategy.TemplateStrategy
 ```
 
+Bulk helpers:
+
+```
+./scripts/bots up
+./scripts/bots down
+```
+
 First time (or if the `config.json` is missing), copy the example config:
 
 ```
@@ -73,7 +80,7 @@ Folder name:
 
 Inside the folder:
 
-- `FreqHub.Strategy.<StrategyName>.py`
+- `<StrategyName>Strategy.py`
 
 Each strategy folder may also include:
 

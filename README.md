@@ -32,7 +32,7 @@
 
 # FreqHub Strategies
 
-[![Version](https://img.shields.io/badge/version-0.2.14-blue)](VERSION)
+[![Version](https://img.shields.io/badge/version-0.2.15-blue)](VERSION)
 [![License](https://img.shields.io/badge/license-GPL--3.0-green)](LICENSE)
 [![FreqHub](https://img.shields.io/badge/FreqHub-Repo-blue)](https://github.com/hrodrig/freqhub)
 
@@ -57,6 +57,7 @@ how these strategies map to it.
 ## Included strategies
 
 - `BinHV45`: Mean reversion strategy with Bollinger Bands.
+- `EMACrossover`: EMA crossover strategy with momentum confirmation.
 - `FailureToReturn`: Failure to Return (FTR) breakout continuation strategy.
 - `IchiV1`: Ichimoku Cloud strategy.
 - `MandelbrotFibonacci`: Fractals + Fibonacci pullback strategy.
@@ -64,7 +65,9 @@ how these strategies map to it.
 - `MarkovFastEMA`: Markov with fast EMA confirmation.
 - `MarkovRSI`: Markov with optimizable RSI thresholds.
 - `MarkovVolume`: Markov with volume confirmation.
+- `MessageTest`: Messaging test strategy (do not use for live trading).
 - `RSI_Bollinger`: RSI + Bollinger example.
+- `RSIEMA50`: RSI + EMA50 trend-following strategy.
 - `TemplateStrategy`: minimal example strategy.
 
 ## Requirements
